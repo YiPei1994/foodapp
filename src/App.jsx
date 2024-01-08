@@ -1,11 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Applayouts from './components/Applayouts';
-import Drinks from './pages/Drinks';
-import Desserts from './pages/Desserts';
-import Sides from './pages/Sides';
-import Main from './pages/Main';
+
 import Welcome from './pages/Welcome';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MenusContextProvider } from './contexts/MenuContext';
+import Menus from './pages/Menus';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,20 +23,8 @@ const router = createBrowserRouter([
         element: <Welcome />,
       },
       {
-        path: '/drinks',
-        element: <Drinks />,
-      },
-      {
-        path: '/main',
-        element: <Main />,
-      },
-      {
-        path: '/sides',
-        element: <Sides />,
-      },
-      {
-        path: '/desserts',
-        element: <Desserts />,
+        path: '/menus',
+        element: <Menus />,
       },
     ],
   },
@@ -45,7 +32,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <MenusContextProvider>
+        <RouterProvider router={router} />
+      </MenusContextProvider>
     </QueryClientProvider>
   );
 }
