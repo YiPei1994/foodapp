@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import MenuNav from './MenuNav';
 import Logo from './Logo';
-import MenuBusket from './MenuBusket';
+import MenuBusket from '../features/menus/MenuBusket';
+import { Container } from '@chakra-ui/react';
 
 function Applayouts() {
   return (
-    <div>
+    <Container>
       <header>
         <Logo />
         <MenuNav />
@@ -16,7 +17,7 @@ function Applayouts() {
       <footer>
         <MenuBusket />
       </footer>
-    </div>
+    </Container>
   );
 }
 

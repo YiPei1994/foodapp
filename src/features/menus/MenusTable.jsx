@@ -1,25 +1,21 @@
 import React from 'react';
 import MenusOperation from './MenusOperation';
-import MenusList from './MenusList';
 import { useReadMenus } from './useReadMenus';
-import { Spinner } from 'flowbite-react';
+
 import { useSearchParams } from 'react-router-dom';
+import Menu from './Menu';
+import { Container, Spinner } from '@chakra-ui/react';
 
 function MenusTable() {
+  const [searchParams] = useSearchParams();
   const { menus, isLoading } = useReadMenus();
-  const { searchParams } = useSearchParams();
 
-  if (isLoading)
-    return (
-      <Spinner
-        color="info"
-        aria-label="Info spinner example"
-        className="text-blue-500"
-      />
-    );
+  if (isLoading) return <Spinner />;
 
-  const filterValue = searchParams.get('type') || 'all';
+  const filterValue = searchParams.get('types') || 'drink';
+
   let filteredMenus;
+
   if (filterValue === 'drink')
     filteredMenus = menus.filter((menu) => menu.item_type === 'drink');
   if (filterValue === 'starter')
@@ -30,13 +26,16 @@ function MenusTable() {
     filteredMenus = menus.filter((menu) => menu.item_type === 'side');
   if (filterValue === 'dessert')
     filteredMenus = menus.filter((menu) => menu.item_type === 'dessert');
-  console.log(filterValue);
-  console.log(filteredMenus);
+
   return (
-    <div>
+    <Container>
       <MenusOperation />
-      <MenusList />
-    </div>
+      <div>
+        {filteredMenus.map((menu) => (
+          <Menu key={menu.item_id} menu={menu} />
+        ))}
+      </div>
+    </Container>
   );
 }
 

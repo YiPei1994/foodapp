@@ -1,33 +1,63 @@
 import { createContext, useContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const MenusContext = createContext();
 
 const MenusContextProvider = ({ children }) => {
   const [orderItems, setOrderItems] = useState([]);
+  const [searchParams] = useSearchParams();
 
-  const addItem = (newItem) => {
-    const itemName = newItem.name;
-
+  let table = searchParams.get('table') || 1;
+  const handleAdd = (newItem) => {
     if (!newItem) return;
-
-    const itemExistsIndex = orderItems.findIndex(
-      (item) => item.name === itemName,
+    const newItemId = newItem.item_id;
+    const existedItemIndex = orderItems.findIndex(
+      (item) => item.item_id === newItemId,
     );
 
-    if (itemExistsIndex !== -1) {
+    if (existedItemIndex !== -1) {
       const updatedOrderItems = [...orderItems];
-      updatedOrderItems[itemExistsIndex] = {
-        ...updatedOrderItems[itemExistsIndex],
-        quantity: updatedOrderItems[itemExistsIndex].quantity + 1,
-      };
+      updatedOrderItems[existedItemIndex].quantity += 1;
       setOrderItems(updatedOrderItems);
     } else {
-      setOrderItems([...orderItems, newItem]);
+      setOrderItems([...orderItems, { ...newItem, quantity: 1 }]);
     }
   };
-  console.log(orderItems);
+
+  const handleDecrease = (id) => {
+    if (!id) return;
+
+    const existedItemIndex = orderItems.findIndex(
+      (item) => item.item_id === id,
+    );
+
+    if (existedItemIndex !== -1) {
+      const updatedOrderItems = [...orderItems];
+      updatedOrderItems[existedItemIndex].quantity -= 1;
+      setOrderItems(updatedOrderItems);
+    }
+  };
+
+  const totalMenuQuantity = orderItems.reduce(
+    (acc, cur) => acc + cur.quantity,
+    0,
+  );
+  const totalMenuPrice = orderItems.reduce(
+    (acc, cur) => acc + cur.price * cur.quantity,
+    0,
+  );
+
   return (
-    <MenusContext.Provider value={{ addItem }}>
+    <MenusContext.Provider
+      value={{
+        orderItems,
+        handleAdd,
+        handleDecrease,
+        totalMenuQuantity,
+        totalMenuPrice,
+        table,
+      }}
+    >
       {children}
     </MenusContext.Provider>
   );

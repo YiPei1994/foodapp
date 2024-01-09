@@ -6,6 +6,6 @@ export const getMenus = async () => {
   if (error) {
     throw new Error('Couldnt fetch menus.');
   }
-  console.log(data);
+
   return data;
 };
