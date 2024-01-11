@@ -1,6 +1,6 @@
 import React from 'react';
-import { useMenus } from '../../contexts/MenuContext';
 import MenuList from './MenuList';
+import { useMenus } from '../../contexts/useMenus';
 
 function MenuBasket() {
   const { totalMenuQuantity, totalMenuPrice } = useMenus();

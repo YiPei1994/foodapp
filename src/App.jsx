@@ -1,12 +1,15 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Applayouts from './components/Applayouts';
-import Welcome from './pages/Welcome';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MenusContextProvider } from './contexts/MenuContext';
 import Menus from './pages/Menus';
 import { ChakraProvider } from '@chakra-ui/react';
 import PageNotFound from './pages/PageNotFound';
 import Orders from './pages/Orders';
+import { Toaster } from 'react-hot-toast';
+import OrderWaitRoom from './features/order/OrderWaitRoom';
+import { OrderContextProvider } from './contexts/OrderContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,15 +25,33 @@ function App() {
       <ChakraProvider>
         <BrowserRouter>
           <MenusContextProvider>
-            <Routes>
-              <Route element={<Applayouts />}>
-                <Route index element={<Navigate replace to="home" />} />
-                <Route path="home" element={<Welcome />} />
-                <Route path="menus" element={<Menus />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="*" element={<PageNotFound />} />
-              </Route>
-            </Routes>
+            <OrderContextProvider>
+              <Routes>
+                <Route element={<Applayouts />}>
+                  <Route index element={<Navigate replace to="menus" />} />
+                  <Route path="menus" element={<Menus />} />
+                  <Route path="orders" element={<Orders />} />
+                  <Route path="orders/:orderId" element={<OrderWaitRoom />} />
+                  <Route path="*" element={<PageNotFound />} />
+                </Route>
+              </Routes>
+              <Toaster
+                position="top-center"
+                gutter={12}
+                containerStyle={{ margin: '8px' }}
+                toastOptions={{
+                  sucess: { duration: 3000 },
+                  error: { duration: 5000 },
+                  style: {
+                    fontSize: '16px',
+                    maxWidth: '500px',
+                    padding: '16px 24px',
+                    backgroundColor: 'var(--color-grey-0)',
+                    color: 'var(--color-grey-700)',
+                  },
+                }}
+              />
+            </OrderContextProvider>
           </MenusContextProvider>
         </BrowserRouter>
       </ChakraProvider>

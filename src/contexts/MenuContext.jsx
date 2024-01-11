@@ -1,48 +1,43 @@
-import { createContext, useContext, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { createContext, useState } from 'react';
 
 const MenusContext = createContext();
 
 const MenusContextProvider = ({ children }) => {
-  const [orderItems, setOrderItems] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [menuItems, setMenuItems] = useState([]);
 
-  let table = searchParams.get('table') || 1;
   const handleAdd = (newItem) => {
     if (!newItem) return;
     const newItemId = newItem.item_id;
-    const existedItemIndex = orderItems.findIndex(
+    const existedItemIndex = menuItems.findIndex(
       (item) => item.item_id === newItemId,
     );
 
     if (existedItemIndex !== -1) {
-      const updatedOrderItems = [...orderItems];
-      updatedOrderItems[existedItemIndex].quantity += 1;
-      setOrderItems(updatedOrderItems);
+      const updateMenuItems = [...menuItems];
+      updateMenuItems[existedItemIndex].quantity += 1;
+      setMenuItems(updateMenuItems);
     } else {
-      setOrderItems([...orderItems, { ...newItem, quantity: 1 }]);
+      setMenuItems([...menuItems, { ...newItem, quantity: 1 }]);
     }
   };
 
   const handleDecrease = (id) => {
     if (!id) return;
 
-    const existedItemIndex = orderItems.findIndex(
-      (item) => item.item_id === id,
-    );
+    const existedItemIndex = menuItems.findIndex((item) => item.item_id === id);
 
     if (existedItemIndex !== -1) {
-      const updatedOrderItems = [...orderItems];
-      updatedOrderItems[existedItemIndex].quantity -= 1;
-      setOrderItems(updatedOrderItems);
+      const updateMenuItems = [...menuItems];
+      updateMenuItems[existedItemIndex].quantity -= 1;
+      setMenuItems(updateMenuItems);
     }
   };
 
-  const totalMenuQuantity = orderItems.reduce(
+  const totalMenuQuantity = menuItems.reduce(
     (acc, cur) => acc + cur.quantity,
     0,
   );
-  const totalMenuPrice = orderItems.reduce(
+  const totalMenuPrice = menuItems.reduce(
     (acc, cur) => acc + cur.price * cur.quantity,
     0,
   );
@@ -50,12 +45,12 @@ const MenusContextProvider = ({ children }) => {
   return (
     <MenusContext.Provider
       value={{
-        orderItems,
+        menuItems,
         handleAdd,
         handleDecrease,
         totalMenuQuantity,
         totalMenuPrice,
-        table,
+        setMenuItems,
       }}
     >
       {children}
@@ -63,13 +58,4 @@ const MenusContextProvider = ({ children }) => {
   );
 };
 
-const useMenus = () => {
-  const context = useContext(MenusContext);
-  if (context === undefined) {
-    console.error('Menus context was used outside MenusContextProvider');
-  }
-
-  return context;
-};
-
-export { MenusContextProvider, useMenus };
+export { MenusContextProvider, MenusContext };

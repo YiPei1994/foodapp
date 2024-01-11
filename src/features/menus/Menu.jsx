@@ -1,15 +1,15 @@
 import { Box, Button, Container, Text } from '@chakra-ui/react';
 import React from 'react';
-import { useMenus } from '../../contexts/MenuContext';
+import { useMenus } from '../../contexts/useMenus';
 
 function Menu({ menu }) {
   const { item_id, item_name, price, description } = menu;
-  const { handleAdd, orderItems, handleDecrease } = useMenus();
+  const { handleAdd, menuItems, handleDecrease } = useMenus();
 
-  const existedItemIndex = orderItems.findIndex(
+  const existedItemIndex = menuItems.findIndex(
     (item) => item.item_id === item_id,
   );
-  let existedItemQuantity = orderItems.find(
+  let existedItemQuantity = menuItems.find(
     (item) => item.item_id === item_id,
   )?.quantity;
 

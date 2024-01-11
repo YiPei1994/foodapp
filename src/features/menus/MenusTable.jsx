@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenusOperation from './MenusOperation';
 import { useReadMenus } from './useReadMenus';
 
@@ -7,8 +7,13 @@ import Menu from './Menu';
 import { Container, Spinner } from '@chakra-ui/react';
 
 function MenusTable() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { menus, isLoading } = useReadMenus();
+
+  useEffect(() => {
+    searchParams.set('table', 3);
+    setSearchParams(searchParams);
+  }, []);
 
   if (isLoading) return <Spinner />;
 

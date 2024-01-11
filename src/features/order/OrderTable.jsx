@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOrders } from './useOrders';
 import { Spinner } from '@chakra-ui/react';
-import CustomerTable from '../tables/CustomerTable';
+import CustomerTable from './CustomerTable';
 
 function OrderTable() {
   const { orders, isLoading } = useOrders();

@@ -11,7 +11,6 @@ export const getOrders = async () => {
 };
 
 export const getItemsFromOrderId = async (id) => {
-  console.log(id);
   const { data, error } = await supabase
     .from('order_items')
     .select(`menu_items:item_id(*),quantity`)
@@ -22,4 +21,68 @@ export const getItemsFromOrderId = async (id) => {
   }
 
   return data;
+};
+
+export const createNewOrder = async (id) => {
+  const existingRecord = await supabase
+    .from('orders')
+    .select('table_id')
+    .eq('table_id', id);
+
+  if (existingRecord.data.length === 0) {
+    const { error } = await supabase
+      .from('orders')
+      .insert([{ table_id: id }])
+      .select();
+
+    if (error) {
+      throw new Error("Couldn't add new table");
+    }
+  } else {
+    throw new Error('Your table is full. Please check your table number.');
+  }
+};
+
+export const fetchLastOrderId = async (id) => {
+  const { data: tableData, error: tableError } = await supabase
+    .from('orders')
+    .select('order_id')
+    .eq('table_id', id)
+    .order('order_id', { ascending: false })
+    .limit(1);
+
+  if (tableError) {
+    throw new Error(
+      'Failed to fetch the last order ID for the specified table_id',
+    );
+  }
+
+  if (tableData.length === 0) {
+    throw new Error(`No orders found for the table_id: ${id}`);
+  }
+
+  const lastOrder = tableData[0];
+  const lastOrderId = lastOrder.order_id;
+
+  return lastOrderId;
+};
+
+export const createNewOrderItems = async (items) => {
+  const { data, error } = await supabase
+    .from('order_items')
+    .insert(items)
+    .select();
+
+  if (error) {
+    throw new Error('Couldnt create new order items');
+  }
+  return data;
+};
+
+export const deleteOrder = async (id) => {
+  const { error } = await supabase.from('orders').delete().eq('table_id', id);
+
+  if (error) {
+    throw new Error('Coudnt find this table');
+  }
 };
