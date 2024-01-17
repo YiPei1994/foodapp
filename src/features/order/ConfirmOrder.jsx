@@ -63,7 +63,7 @@ function ConfirmOrder({ type, error, isError }) {
     const customerOrder = {
       customer,
       orderId,
-      ...menuItems,
+      items: [...menuItems],
     };
     localStorage.setItem('customerOrder', JSON.stringify(customerOrder));
   }

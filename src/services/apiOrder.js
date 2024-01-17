@@ -10,6 +10,19 @@ export const getOrders = async () => {
   return data;
 };
 
+export const getMyOrderStatus = async (id) => {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('status')
+    .eq('order_id', id);
+
+  if (error) {
+    throw new Error('No Status found.');
+  }
+
+  return data;
+};
+
 export const getItemsFromOrderId = async (id) => {
   const { data, error } = await supabase
     .from('order_items')
