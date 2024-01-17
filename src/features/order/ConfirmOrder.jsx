@@ -17,17 +17,17 @@ import { useMenus } from '../../contexts/useMenus';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLastOrderId } from '../../services/apiOrder';
 
-function ConfirmOrder({ type, table, error, isError }) {
+function ConfirmOrder({ type, error, isError }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { menuItems, setMenuItems } = useMenus();
-  const { setNewOrderItems, newOrderItems, setNewOrderId } = useContextOrders();
+  const { menuItems, setMenuItems, customer, table } = useMenus();
+  const { setNewOrderItems, newOrderItems } = useContextOrders();
   const { creatingNewItems } = useCreateNewItem();
 
   const { data: orderId } = useQuery({
     queryKey: ['orders', table],
     queryFn: () => fetchLastOrderId(table),
   });
-  console.log(orderId);
+
   const navigate = useNavigate();
 
   function createNewOrderItems(items) {
@@ -44,13 +44,14 @@ function ConfirmOrder({ type, table, error, isError }) {
 
   function handleCreatingTable() {
     if (!table || !orderId) return;
+
     onOpen();
     createNewOrderItems(menuItems);
-    setNewOrderId(orderId);
   }
 
   function handleSubmit() {
     if (newOrderItems.length === 0) return;
+
     creatingNewItems(newOrderItems, {
       onSuccess: () => {
         setMenuItems([]);
@@ -58,7 +59,15 @@ function ConfirmOrder({ type, table, error, isError }) {
         navigate(`/orders/${orderId}`);
       },
     });
+
+    const customerOrder = {
+      customer,
+      orderId,
+      ...menuItems,
+    };
+    localStorage.setItem('customerOrder', JSON.stringify(customerOrder));
   }
+
   return (
     <>
       <Button onClick={handleCreatingTable}>Confirm {type}</Button>

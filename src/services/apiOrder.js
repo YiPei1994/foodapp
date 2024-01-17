@@ -23,23 +23,26 @@ export const getItemsFromOrderId = async (id) => {
   return data;
 };
 
-export const createNewOrder = async (id) => {
+export const createNewOrder = async ({ table, customer }) => {
+  console.log(table, customer);
   const existingRecord = await supabase
     .from('orders')
-    .select('table_id')
-    .eq('table_id', id);
+    .select('customer_id')
+    .eq('customer_id', customer);
 
   if (existingRecord.data.length === 0) {
     const { error } = await supabase
       .from('orders')
-      .insert([{ table_id: id }])
+      .insert([{ table_id: table, customer_id: customer }])
       .select();
 
     if (error) {
       throw new Error("Couldn't add new table");
     }
   } else {
-    throw new Error('Your table is full. Please check your table number.');
+    throw new Error(
+      'You have made order already. Please check your order window.',
+    );
   }
 };
 
@@ -52,6 +55,7 @@ export const fetchLastOrderId = async (id) => {
     .limit(1);
 
   if (tableError) {
+    console.log(tableError.message);
     throw new Error(
       'Failed to fetch the last order ID for the specified table_id',
     );

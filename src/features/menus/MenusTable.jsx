@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react';
 import MenusOperation from './MenusOperation';
 import { useReadMenus } from './useReadMenus';
-
 import { useSearchParams } from 'react-router-dom';
 import Menu from './Menu';
 import { Container, Spinner } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 
 function MenusTable() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { menus, isLoading } = useReadMenus();
 
   useEffect(() => {
-    searchParams.set('table', 3);
-    setSearchParams(searchParams);
+    setSearchParams(new URLSearchParams({ table: 3, customer_id: uuidv4() }));
   }, []);
 
   if (isLoading) return <Spinner />;

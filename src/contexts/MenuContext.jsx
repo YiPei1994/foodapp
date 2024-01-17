@@ -1,10 +1,23 @@
+import { useQuery } from '@chakra-ui/media-query';
 import { createContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { fetchLastOrderId } from '../services/apiOrder';
 
 const MenusContext = createContext();
 
 const MenusContextProvider = ({ children }) => {
   const [menuItems, setMenuItems] = useState([]);
+  const [searchParams] = useSearchParams();
 
+  // Get table and customer ID from URL parameters
+  const table = searchParams.get('table');
+  const customer = searchParams.get('customer_id');
+
+  // Fetch the last order ID for the specified table
+  const { data: orderId, refetch } = useQuery({
+    queryKey: ['orders', table],
+    queryFn: () => fetchLastOrderId(table),
+  });
   const handleAdd = (newItem) => {
     if (!newItem) return;
     const newItemId = newItem.item_id;
@@ -51,6 +64,10 @@ const MenusContextProvider = ({ children }) => {
         totalMenuQuantity,
         totalMenuPrice,
         setMenuItems,
+        customer,
+        table,
+        orderId,
+        refetch,
       }}
     >
       {children}

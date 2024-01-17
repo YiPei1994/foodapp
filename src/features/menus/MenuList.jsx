@@ -12,7 +12,6 @@ import {
 
 import Menu from './Menu';
 
-import { useSearchParams } from 'react-router-dom';
 import ConfirmOrder from '../order/ConfirmOrder';
 import { useCreateTable } from '../order/useCreateTable';
 import { useQuery } from '@tanstack/react-query';
@@ -22,43 +21,45 @@ import { useMenus } from '../../contexts/useMenus';
 
 function MenuList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { menuItems } = useMenus();
+  const { menuItems, customer, table } = useMenus();
   const { creatingTable, error, isError } = useCreateTable();
   const { deletingOrder } = useDeleteOrder();
-  const [searchParams] = useSearchParams();
 
-  const placement = 'right';
-  const table = searchParams.get('table');
+  // Fetch the last order ID for the specified table
   const { data: orderId, refetch } = useQuery({
     queryKey: ['orders', table],
     queryFn: () => fetchLastOrderId(table),
   });
 
+  // Function to handle creating a new table and opening the drawer
   function handleCreatingTable() {
     if (!table) return;
     onOpen();
-    creatingTable(table);
+    creatingTable({ table, customer });
     refetch(table);
   }
 
+  // Function to handle closing the drawer and deleting the order if exists
   function handleClose() {
     onClose();
     if (!orderId) return;
     deletingOrder(table);
   }
+
   return (
     <>
       <Button colorScheme="blue" onClick={handleCreatingTable}>
         Create Order
       </Button>
 
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
-            Your table is {table} and order number is : {orderId}
+            Your table is {table} and order number is: {orderId}
           </DrawerHeader>
           <DrawerBody>
+            {/* Render menu items */}
             {menuItems.map((menu) => (
               <Menu key={menu.item_id} menu={menu} />
             ))}
@@ -67,14 +68,8 @@ function MenuList() {
             <Button variant="outline" mr={3} onClick={handleClose}>
               Cancel
             </Button>
-            <ConfirmOrder
-              table={table}
-              type="order"
-              error={error}
-              isError={isError}
-              orderItems={menuItems}
-              orderId={orderId}
-            />
+            {/* ConfirmOrder component with relevant props */}
+            <ConfirmOrder type="order" error={error} isError={isError} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

@@ -1,20 +1,8 @@
-import React, { useEffect } from 'react';
-import { useContextOrders } from '../../contexts/useContextOrders';
-import { useQuery } from '@tanstack/react-query';
-import { getItemsFromOrderId } from '../../services/apiOrder';
-
 function OrderWaitRoom() {
-  const { newOrderId } = useContextOrders();
-  console.log(newOrderId);
-  const { data: ordered_items, refetch } = useQuery({
-    queryKey: ['order_items', newOrderId],
-    queryFn: () => getItemsFromOrderId(newOrderId),
-  });
+  const customerOrders = JSON.parse(localStorage.getItem('customerOrder'));
 
-  useEffect(() => {
-    refetch();
-  }, []);
-  console.log(ordered_items);
+  console.log(customerOrders);
+  const 
   return <div>OrderWaitRoom</div>;
 }
 
