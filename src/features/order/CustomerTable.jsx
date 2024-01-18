@@ -1,13 +1,14 @@
 import {
   Button,
-  DrawerBody,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
   Text,
   useDisclosure,
-  Drawer,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +18,7 @@ import { useUpdateOrderStatus } from './useUpdateOrderStatus';
 function CustomerTable({ order }) {
   const { status, table_id, order_id } = order;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const placement = 'left';
+
   const statusCooking = 'Cooking';
   const { updatingStatus } = useUpdateOrderStatus();
   const { data: ordered_items, refetch } = useQuery({
@@ -47,13 +48,13 @@ function CustomerTable({ order }) {
         <Text>table: {table_id}</Text>
         <span>{status} </span>
       </div>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">
-            Menu of table {table_id}{' '}
-          </DrawerHeader>
-          <DrawerBody>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> Menu of table {table_id} </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
             {ordered_items?.map((item, i) => (
               <Text
                 className="my-2 flex w-full items-center justify-between gap-10"
@@ -64,17 +65,18 @@ function CustomerTable({ order }) {
                 <span> {item.menu_items.item_name}</span>{' '}
               </Text>
             ))}
-          </DrawerBody>
-          <DrawerFooter borderTopWidth="1px">
+          </ModalBody>
+
+          <ModalFooter>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
             <Button colorScheme="green" onClick={handlePrint}>
               Print
             </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

@@ -20,7 +20,6 @@ export const deleteOrder = async (id) => {
   }
 };
 
-
 // fetch status of order on specific id
 export const getMyOrderStatus = async (id) => {
   const { data, error } = await supabase
@@ -37,7 +36,6 @@ export const getMyOrderStatus = async (id) => {
 
 // change order status
 export const updateOrderStatus = async (newData) => {
-  console.log(newData);
   const { order_id, statusCooking } = newData;
   const { data, error } = await supabase
     .from('orders')
@@ -81,7 +79,6 @@ export const createNewOrderItems = async (items) => {
 
 // creating new order using table and customer ids
 export const createNewOrder = async ({ table, customer }) => {
-  console.log(table, customer);
   const existingRecord = await supabase
     .from('orders')
     .select('customer_id')
@@ -113,7 +110,6 @@ export const fetchLastOrderId = async (id) => {
     .limit(1);
 
   if (tableError) {
-    console.log(tableError.message);
     throw new Error(
       'Failed to fetch the last order ID for the specified table_id',
     );
@@ -128,4 +124,3 @@ export const fetchLastOrderId = async (id) => {
 
   return lastOrderId;
 };
-

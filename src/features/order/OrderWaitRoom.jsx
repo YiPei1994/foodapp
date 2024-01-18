@@ -14,7 +14,7 @@ function OrderWaitRoom() {
   });
 
   if (isLoading) return <Spinner />;
-  console.log(items);
+
   const orderStatus = status[0].status;
   return (
     <div>

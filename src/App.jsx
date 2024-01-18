@@ -10,6 +10,7 @@ import Orders from './pages/Orders';
 import { Toaster } from 'react-hot-toast';
 import OrderWaitRoom from './features/order/OrderWaitRoom';
 import { OrderContextProvider } from './contexts/OrderContext';
+import Login from './pages/Login';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +35,7 @@ function App() {
                   <Route path="orders/:orderId" element={<OrderWaitRoom />} />
                   <Route path="*" element={<PageNotFound />} />
                 </Route>
+                <Route path="login" element={<Login />} />
               </Routes>
               <Toaster
                 position="top-center"
@@ -46,8 +48,8 @@ function App() {
                     fontSize: '16px',
                     maxWidth: '500px',
                     padding: '16px 24px',
-                    backgroundColor: 'var(--color-grey-0)',
-                    color: 'var(--color-grey-700)',
+                    backgroundColor: '#fff',
+                    color: '#000',
                   },
                 }}
               />
