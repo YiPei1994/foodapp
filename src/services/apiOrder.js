@@ -1,5 +1,6 @@
 import supabase from './apiSupabase';
 
+// fetch all orders
 export const getOrders = async () => {
   const { data, error } = await supabase.from('orders').select('*');
 
@@ -10,6 +11,17 @@ export const getOrders = async () => {
   return data;
 };
 
+// deleting order incase change of mind
+export const deleteOrder = async (id) => {
+  const { error } = await supabase.from('orders').delete().eq('table_id', id);
+
+  if (error) {
+    throw new Error('Coudnt find this table');
+  }
+};
+
+
+// fetch status of order on specific id
 export const getMyOrderStatus = async (id) => {
   const { data, error } = await supabase
     .from('orders')
@@ -23,6 +35,23 @@ export const getMyOrderStatus = async (id) => {
   return data;
 };
 
+// change order status
+export const updateOrderStatus = async (newData) => {
+  console.log(newData);
+  const { order_id, statusCooking } = newData;
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status: statusCooking })
+    .eq('order_id', order_id)
+    .select();
+
+  if (error) {
+    throw new Error('Couldnt update status of order.');
+  }
+  return data;
+};
+
+// fetch all order items related to specific id
 export const getItemsFromOrderId = async (id) => {
   const { data, error } = await supabase
     .from('order_items')
@@ -36,6 +65,21 @@ export const getItemsFromOrderId = async (id) => {
   return data;
 };
 
+// creates new order items in order_items with its ids
+
+export const createNewOrderItems = async (items) => {
+  const { data, error } = await supabase
+    .from('order_items')
+    .insert(items)
+    .select();
+
+  if (error) {
+    throw new Error('Couldnt create new order items');
+  }
+  return data;
+};
+
+// creating new order using table and customer ids
 export const createNewOrder = async ({ table, customer }) => {
   console.log(table, customer);
   const existingRecord = await supabase
@@ -59,6 +103,7 @@ export const createNewOrder = async ({ table, customer }) => {
   }
 };
 
+// fetch for last generated orderId related to specific table id
 export const fetchLastOrderId = async (id) => {
   const { data: tableData, error: tableError } = await supabase
     .from('orders')
@@ -84,37 +129,3 @@ export const fetchLastOrderId = async (id) => {
   return lastOrderId;
 };
 
-export const createNewOrderItems = async (items) => {
-  const { data, error } = await supabase
-    .from('order_items')
-    .insert(items)
-    .select();
-
-  if (error) {
-    throw new Error('Couldnt create new order items');
-  }
-  return data;
-};
-
-export const deleteOrder = async (id) => {
-  const { error } = await supabase.from('orders').delete().eq('table_id', id);
-
-  if (error) {
-    throw new Error('Coudnt find this table');
-  }
-};
-
-export const updateOrderStatus = async (newData) => {
-  console.log(newData);
-  const { order_id, statusCooking } = newData;
-  const { data, error } = await supabase
-    .from('orders')
-    .update({ status: statusCooking })
-    .eq('order_id', order_id)
-    .select();
-
-  if (error) {
-    throw new Error('Couldnt update status of order.');
-  }
-  return data;
-};

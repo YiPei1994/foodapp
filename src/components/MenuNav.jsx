@@ -6,8 +6,9 @@ function MenuNav() {
   return (
     <nav>
       <NavLink to="menus"> Menus </NavLink>
-      <NavLink to="orders">Orders</NavLink>
       <NavLink to={`orders/${newOrderId}`}>My order</NavLink>
+      <NavLink to="orders">Orders</NavLink>
+  
     </nav>
   );
 }
