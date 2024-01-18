@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyOrderStatus } from '../../services/apiOrder';
 
-import { Spinner } from '@chakra-ui/react';
+import { Badge, Spinner } from '@chakra-ui/react';
 import SingleOrder from './SingleOrder';
 
 function OrderWaitRoom() {
@@ -18,11 +18,24 @@ function OrderWaitRoom() {
   const orderStatus = status[0].status;
   return (
     <div>
-      your order id is {orderId}
+      <p>
+        {' '}
+        your order id is {orderId}{' '}
+        {orderStatus === 'In Progress' && (
+          <Badge colorScheme="yellow">{orderStatus}</Badge>
+        )}
+        {orderStatus === 'Cooking' && (
+          <Badge colorScheme="orange">{orderStatus}</Badge>
+        )}
+        {orderStatus === 'Ready' && (
+          <Badge colorScheme="whatsapp">{orderStatus}</Badge>
+        )}
+      </p>
+
       <div>
-        {/*      {items.map((item) => (
-          <SingleOrder key={item.item_id} item={item} />
-        ))} */}
+        {items.map((item) => (
+          <SingleOrder item={item} key={item.item_id} />
+        ))}
       </div>
     </div>
   );

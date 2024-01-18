@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getItemsFromOrderId } from '../../services/apiOrder';
+import { getItemsFromOrderId } from '../../services/apiOwner';
 import { useSearchParams } from 'react-router-dom';
 
 export const useReadOrder = () => {

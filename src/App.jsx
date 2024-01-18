@@ -22,10 +22,10 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <BrowserRouter>
-          <MenusContextProvider>
-            <OrderContextProvider>
+      <BrowserRouter>
+        <MenusContextProvider>
+          <OrderContextProvider>
+            <ChakraProvider>
               <Routes>
                 <Route element={<Applayouts />}>
                   <Route index element={<Navigate replace to="menus" />} />
@@ -51,10 +51,10 @@ function App() {
                   },
                 }}
               />
-            </OrderContextProvider>
-          </MenusContextProvider>
-        </BrowserRouter>
-      </ChakraProvider>
+            </ChakraProvider>
+          </OrderContextProvider>
+        </MenusContextProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }

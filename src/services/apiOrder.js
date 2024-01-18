@@ -103,3 +103,18 @@ export const deleteOrder = async (id) => {
     throw new Error('Coudnt find this table');
   }
 };
+
+export const updateOrderStatus = async (newData) => {
+  console.log(newData);
+  const { order_id, statusCooking } = newData;
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status: statusCooking })
+    .eq('order_id', order_id)
+    .select();
+
+  if (error) {
+    throw new Error('Couldnt update status of order.');
+  }
+  return data;
+};
