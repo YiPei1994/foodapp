@@ -32,9 +32,9 @@ function MenusTable() {
     filteredMenus = menus.filter((menu) => menu.item_type === 'dessert');
 
   return (
-    <Container>
+    <Container className="flex w-full flex-col gap-6">
       <MenusOperation />
-      <div>
+      <div className="flex flex-col gap-4 ">
         {filteredMenus.map((menu) => (
           <Menu key={menu.item_id} menu={menu} />
         ))}

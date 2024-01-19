@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Button, Container, Text } from '@chakra-ui/react';
 import { useMenus } from '../../contexts/useMenus';
+import { CiCirclePlus } from 'react-icons/ci';
+import { CiCircleMinus } from 'react-icons/ci';
 
 function Menu({ menu }) {
   const { item_id, item_name, price, description } = menu;
@@ -15,22 +17,31 @@ function Menu({ menu }) {
   )?.quantity;
 
   return (
-    <Container className="flex flex-wrap">
-      <Text>
-        <span>{item_name}</span> <span>{price} €</span>
-      </Text>
-      <Text>{description}</Text>
-
-      {existedItemIndex !== -1 && existedItemQuantity > 0 ? (
-        <Box>
-          <button onClick={() => handleDecrease(item_id)}>-</button>
-          {existedItemQuantity}
-          <button onClick={() => handleAdd({ ...menu, quantity: 1 })}>+</button>
-        </Box>
-      ) : (
-        <Button onClick={() => handleAdd({ ...menu, quantity: 1 })}>Add</Button>
-      )}
-    </Container>
+    <div className="flex w-full flex-col ">
+      <div className="flex w-full  cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-xl text-neutral-800">
+        <span className="w-[45%] ">{item_name}</span>{' '}
+        <span className="w-[20%]">{price} €</span>
+        {existedItemIndex !== -1 && existedItemQuantity > 0 ? (
+          <Box className="flex w-[35%] items-center justify-between gap-4 rounded-xl bg-lime-400/50 px-2 py-2 text-2xl text-yellow-50 ">
+            <button onClick={() => handleDecrease(item_id)}>
+              <CiCircleMinus className="text-3xl" />
+            </button>
+            {existedItemQuantity}
+            <button onClick={() => handleAdd({ ...menu, quantity: 1 })}>
+              <CiCirclePlus className="text-3xl" />
+            </button>
+          </Box>
+        ) : (
+          <button
+            className="min-h-[48px] w-[35%] rounded-xl bg-lime-400/50 px-6 py-2 text-yellow-50"
+            onClick={() => handleAdd({ ...menu, quantity: 1 })}
+          >
+            Add
+          </button>
+        )}
+      </div>
+      <div></div>
+    </div>
   );
 }
 

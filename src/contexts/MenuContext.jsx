@@ -41,7 +41,11 @@ const MenusContextProvider = ({ children }) => {
 
     if (existedItemIndex !== -1) {
       const updateMenuItems = [...menuItems];
-      updateMenuItems[existedItemIndex].quantity -= 1;
+
+      updateMenuItems[existedItemIndex].quantity = Math.max(
+        0,
+        updateMenuItems[existedItemIndex].quantity - 1,
+      );
       setMenuItems(updateMenuItems);
     }
   };

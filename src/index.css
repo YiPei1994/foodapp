@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&display=swap');
+
+.custom_bg {
+  background-image: linear-gradient(
+    to left top,
+    #ef4444,
+    #f35541,
+    #f6643e,
+    #f8723c,
+    #fa803b,
+    #fb8a39,
+    #fc9337,
+    #fd9d36,
+    #fea531,
+    #fdae2d,
+    #fdb628,
+    #fbbf24
+  );
+}
+
+.my_Font {
+  font-family: 'Noto Serif', serif;
+}

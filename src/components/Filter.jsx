@@ -10,9 +10,10 @@ function Filter({ options, filterField }) {
   }
 
   return (
-    <div>
-      {options.map((option) => (
+    <div className="flex w-full flex-wrap items-center  gap-4">
+      {options.map((option, i) => (
         <button
+          className="rounded-xl bg-red-200/25 px-4 py-2 text-lg font-bold  uppercase text-yellow-50"
           key={option.value}
           onClick={() => handleClick(option.value)}
           // eslint-disable-next-line react/no-unknown-property

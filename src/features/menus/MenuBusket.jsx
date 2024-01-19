@@ -8,15 +8,22 @@ function MenuBasket() {
   const hasItemsInBasket = totalMenuQuantity > 0 && totalMenuPrice > 0;
 
   return (
-    hasItemsInBasket && (
-      <div>
-        <p>
-          You have {totalMenuQuantity} items in your menu basket with a total
-          amount of {totalMenuPrice} €
-        </p>
-        <MenuList />
-      </div>
-    )
+    <div
+      className={`text-md relative flex  items-center gap-5 bg-yellow-200/25 px-6 py-4 transition-all duration-500 ${
+        hasItemsInBasket ? 'bottom-0 opacity-100' : 'bottom-[-100px] opacity-0'
+      }`}
+    >
+      <p>
+        You have{' '}
+        <span className="mx-2 text-2xl font-bold text-neutral-900">
+          {' '}
+          {totalMenuQuantity} items
+        </span>{' '}
+        in your basket with a total amount of{' '}
+        <span className="mx-2 text-2xl font-bold"> {totalMenuPrice} € </span>
+      </p>
+      <MenuList />
+    </div>
   );
 }
 
