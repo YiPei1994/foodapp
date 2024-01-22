@@ -40,13 +40,18 @@ const MenusContextProvider = ({ children }) => {
     const existedItemIndex = menuItems.findIndex((item) => item.item_id === id);
 
     if (existedItemIndex !== -1) {
-      const updateMenuItems = [...menuItems];
+      const updatedMenuItems = [...menuItems];
 
-      updateMenuItems[existedItemIndex].quantity = Math.max(
+      updatedMenuItems[existedItemIndex].quantity = Math.max(
         0,
-        updateMenuItems[existedItemIndex].quantity - 1,
+        updatedMenuItems[existedItemIndex].quantity - 1,
       );
-      setMenuItems(updateMenuItems);
+
+      const filteredMenuItems = updatedMenuItems.filter(
+        (item) => item.quantity > 0,
+      );
+
+      setMenuItems(filteredMenuItems);
     }
   };
 

@@ -19,7 +19,7 @@ import { useMenus } from '../../contexts/useMenus';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import MenuSmall from './MenuSmall';
 function MenuList() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose: CloserDrawer } = useDisclosure();
   const { menuItems, customer, table, totalMenuPrice } = useMenus();
   const { creatingTable, error, isError } = useCreateTable();
   const { deletingOrder } = useDeleteOrder();
@@ -40,9 +40,9 @@ function MenuList() {
 
   // Function to handle closing the drawer and deleting the order if exists
   function handleClose() {
-    onClose();
+    CloserDrawer();
     if (!orderId) return;
-    deletingOrder(table);
+    deletingOrder(orderId);
   }
 
   return (
@@ -54,7 +54,12 @@ function MenuList() {
         <AiOutlineShoppingCart className="text-4xl" />
       </div>
 
-      <Drawer placement="right" onClose={onClose} isOpen={isOpen} size={'xl'}>
+      <Drawer
+        placement="right"
+        onClose={CloserDrawer}
+        isOpen={isOpen}
+        size={'xl'}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
@@ -80,7 +85,12 @@ function MenuList() {
               Cancel
             </Button>
             {/* ConfirmOrder component with relevant props */}
-            <ConfirmOrder type="order" error={error} isError={isError} />
+            <ConfirmOrder
+              type="order"
+              error={error}
+              isError={isError}
+              CloserDrawer={CloserDrawer}
+            />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

@@ -6,7 +6,7 @@ export const useDeleteOrder = () => {
   const { mutate: deletingOrder, isLoading } = useMutation({
     mutationFn: deleteOrder,
     onSuccess: () => {
-      toast.success('Order number deleted');
+      /* toast.success('Order number deleted'); */
     },
     onError: (err) => toast.error(err.message),
   });

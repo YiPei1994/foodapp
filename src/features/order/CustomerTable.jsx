@@ -32,7 +32,6 @@ function CustomerTable({ order }) {
   }
 
   function handlePrint() {
-    console.log(order_id, statusCooking);
     if (!order_id) return;
     updatingStatus({ order_id, statusCooking });
   }

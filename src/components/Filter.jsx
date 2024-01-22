@@ -13,7 +13,7 @@ function Filter({ options, filterField }) {
     <div className="flex w-full flex-wrap items-center  gap-4">
       {options.map((option, i) => (
         <button
-          className="rounded-xl bg-red-200/25 px-4 py-2 text-lg font-bold  uppercase text-yellow-50"
+          className="rounded-xl bg-red-200/25 px-4 py-2 text-lg font-bold  uppercase text-yellow-50 disabled:bg-red-400/25"
           key={option.value}
           onClick={() => handleClick(option.value)}
           // eslint-disable-next-line react/no-unknown-property

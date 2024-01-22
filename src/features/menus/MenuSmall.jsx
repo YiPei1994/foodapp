@@ -3,7 +3,6 @@ import { CiCirclePlus } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
 import { useMenus } from '../../contexts/useMenus';
 function MenuSmall({ menu }) {
-  console.log(menu);
   const { item_id, item_name, price, quantity } = menu || {};
   const { handleAdd, menuItems, handleDecrease } = useMenus();
 

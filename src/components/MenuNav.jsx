@@ -6,17 +6,25 @@ function MenuNav() {
   const newOrderId = customerOrders?.orderId;
   const { isAutenticated } = useCurrentUser();
   return (
-    <nav className="flex w-full items-center gap-2 rounded-xl bg-yellow-200/25 p-4 font-bold">
+    <nav className="flex w-full items-center gap-2 rounded-xl bg-yellow-50 p-4 font-bold">
       <NavLink
-        className=" px-4 py-2	text-2xl uppercase tracking-wide text-yellow-50"
         to="menus"
+        className={({ isActive }) =>
+          isActive
+            ? 'rounded-lg bg-yellow-400/75	px-4 py-2 text-xl uppercase tracking-wide text-yellow-50'
+            : 'px-4 py-2	text-xl uppercase tracking-wide '
+        }
       >
         {' '}
         Menus{' '}
       </NavLink>
       {!isAutenticated && (
         <NavLink
-          className="text-2xl uppercase tracking-wide	text-yellow-50	"
+          className={({ isActive }) =>
+            isActive
+              ? 'rounded-lg bg-yellow-400/75	px-4 py-2 text-xl uppercase tracking-wide text-yellow-50'
+              : 'px-4 py-2	text-xl uppercase tracking-wide '
+          }
           to={`orders/${newOrderId}`}
         >
           My order
@@ -25,7 +33,11 @@ function MenuNav() {
 
       {isAutenticated && (
         <NavLink
-          className="text-2xl uppercase tracking-wide	text-yellow-50	"
+          className={({ isActive }) =>
+            isActive
+              ? 'rounded-lg bg-yellow-400/75	px-4 py-2 text-xl uppercase tracking-wide text-yellow-50'
+              : 'px-4 py-2	text-xl uppercase tracking-wide '
+          }
           to="orders"
         >
           Orders

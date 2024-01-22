@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Container, Text } from '@chakra-ui/react';
 import { useMenus } from '../../contexts/useMenus';
 import { CiCirclePlus } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
+import MenuDetails from './MenuDetails';
 
 function Menu({ menu }) {
-  const { item_id, item_name, price, description } = menu;
+  const { item_id, item_name, price, item_type } = menu;
   const { handleAdd, menuItems, handleDecrease } = useMenus();
+  const [displayDetail, setDisplayDetail] = useState(false);
 
   // Find index and quantity of an existing item
   const existedItemIndex = menuItems.findIndex(
@@ -18,7 +20,10 @@ function Menu({ menu }) {
 
   return (
     <div className="flex w-full flex-col ">
-      <div className="flex w-full  cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-xl text-neutral-800">
+      <div
+        onClick={() => setDisplayDetail((d) => !d)}
+        className="mb-2 flex  w-full cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-xl text-neutral-800"
+      >
         <span className="w-[45%] ">{item_name}</span>{' '}
         <span className="w-[20%]">{price} €</span>
         {existedItemIndex !== -1 && existedItemQuantity > 0 ? (
@@ -40,7 +45,13 @@ function Menu({ menu }) {
           </button>
         )}
       </div>
-      <div></div>
+
+      {item_type !== 'drink' && (
+        <div>
+          {' '}
+          <MenuDetails menu={menu} display={displayDetail} />
+        </div>
+      )}
     </div>
   );
 }

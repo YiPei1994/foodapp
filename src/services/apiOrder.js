@@ -13,7 +13,8 @@ export const getOrders = async () => {
 
 // deleting order incase change of mind
 export const deleteOrder = async (id) => {
-  const { error } = await supabase.from('orders').delete().eq('table_id', id);
+  console.log(id);
+  const { error } = await supabase.from('orders').delete().eq('order_id', id);
 
   if (error) {
     throw new Error('Coudnt find this table');
@@ -102,6 +103,7 @@ export const createNewOrder = async ({ table, customer }) => {
 
 // fetch for last generated orderId related to specific table id
 export const fetchLastOrderId = async (id) => {
+  if (!id) return;
   const { data: tableData, error: tableError } = await supabase
     .from('orders')
     .select('order_id')

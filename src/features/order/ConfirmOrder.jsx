@@ -17,7 +17,7 @@ import { useMenus } from '../../contexts/useMenus';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLastOrderId } from '../../services/apiOrder';
 
-function ConfirmOrder({ type, error, isError }) {
+function ConfirmOrder({ type, error, isError, CloserDrawer }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { menuItems, setMenuItems, customer, table } = useMenus();
   const { setNewOrderItems, newOrderItems } = useContextOrders();
@@ -56,6 +56,7 @@ function ConfirmOrder({ type, error, isError }) {
       onSuccess: () => {
         setMenuItems([]);
         onClose();
+        CloserDrawer();
         navigate(`/orders/${orderId}`);
       },
     });
