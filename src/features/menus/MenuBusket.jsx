@@ -5,6 +5,10 @@ import { useMenus } from '../../contexts/useMenus';
 function MenuBasket() {
   const { totalMenuQuantity, totalMenuPrice } = useMenus();
 
+  if (!totalMenuQuantity || !totalMenuPrice) {
+    return null;
+  }
+
   const hasItemsInBasket = totalMenuQuantity > 0 && totalMenuPrice > 0;
 
   return (
