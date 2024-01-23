@@ -6,7 +6,7 @@ function MenuNav() {
   const newOrderId = customerOrders?.orderId;
   const { isAutenticated } = useCurrentUser();
   return (
-    <nav className="my-4 flex w-full items-center gap-2 overflow-auto rounded-xl bg-yellow-50 p-4 font-bold">
+    <nav className="m-auto my-4 flex w-auto items-center gap-2 overflow-auto rounded-xl bg-yellow-50 p-4 font-bold">
       <NavLink
         to="menus"
         className={({ isActive }) =>

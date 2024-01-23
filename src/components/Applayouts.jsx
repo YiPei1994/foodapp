@@ -9,10 +9,12 @@ import { useCurrentUser } from '../features/Auth/useCurrentUser';
 function Applayouts() {
   const { isAutenticated } = useCurrentUser();
   return (
-    <div className="flex h-screen w-full flex-col overflow-hidden">
-      <header className="flex flex-wrap items-center justify-between p-4">
-        <Logo />
-        {isAutenticated && <SignOut />}
+    <div className="flex h-screen w-full  flex-col overflow-hidden">
+      <header className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between py-4">
+        <div className="flex w-full justify-between">
+          <Logo />
+          {isAutenticated && <SignOut />}
+        </div>
         <MenuNav />
       </header>
       <main className="mb-5 overflow-y-scroll">

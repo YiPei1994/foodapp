@@ -6,10 +6,10 @@ function MenuDetails({ menu, display }) {
   return (
     <div
       className={` overflow-hidden transition-all duration-500 ease-in-out ${
-        display ? 'max-h-[440px]' : 'invisible max-h-0'
+        display ? 'max-h-[440px] lg:max-h-[550px]' : 'invisible max-h-0'
       } `}
     >
-      <Card maxW="sm">
+      <Card maxW="xl">
         <CardBody>
           <Image src={image} alt={item_name} borderRadius="lg" />
           <div className="mt-6 flex items-center justify-between">
