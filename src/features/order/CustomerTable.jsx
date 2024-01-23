@@ -14,11 +14,13 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getItemsFromOrderId } from '../../services/apiOrder';
 import { useUpdateOrderStatus } from './useUpdateOrderStatus';
+import { MdTableBar } from 'react-icons/md';
+import { useDeleteOrder } from './useDeleteOrder';
 
 function CustomerTable({ order }) {
   const { status, table_id, order_id } = order;
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { deletingOrder } = useDeleteOrder();
   const statusCooking = 'Cooking';
   const { updatingStatus } = useUpdateOrderStatus();
   const { data: ordered_items, refetch } = useQuery({
@@ -36,16 +38,22 @@ function CustomerTable({ order }) {
     updatingStatus({ order_id, statusCooking });
   }
 
+  function handleDeleteFinishedOrder() {
+    if (!order_id) return;
+    onClose();
+    deletingOrder(order_id);
+  }
   return (
     <>
       <div
         onClick={handleClick}
         className={`${
-          status === 'In Progress' ? 'bg-yellow-400' : 'bg-orange-400'
-        } flex h-32 w-32 flex-col items-center justify-center border border-slate-900 text-slate-50`}
+          status === 'In Progress' ? 'bg-yellow-400' : 'bg-lime-500'
+        } flex h-32 w-32 flex-col items-center justify-center gap-4  rounded-lg  text-2xl text-yellow-50`}
       >
-        <Text>table: {table_id}</Text>
-        <span>{status} </span>
+        <MdTableBar className="text-6xl" />
+
+        <Text>Table: {table_id}</Text>
       </div>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -67,7 +75,14 @@ function CustomerTable({ order }) {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="red"
+              className="mr-auto"
+              onClick={handleDeleteFinishedOrder}
+            >
+              Delete
+            </Button>
+            <Button variant="outline" mr={4} onClick={onClose}>
               Cancel
             </Button>
             <Button colorScheme="green" onClick={handlePrint}>

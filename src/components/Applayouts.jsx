@@ -9,13 +9,13 @@ import { useCurrentUser } from '../features/Auth/useCurrentUser';
 function Applayouts() {
   const { isAutenticated } = useCurrentUser();
   return (
-    <div className="custom_bg my_Font flex h-screen flex-col  overflow-hidden text-neutral-800">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       <header className="flex flex-wrap items-center justify-between p-4">
         <Logo />
         {isAutenticated && <SignOut />}
         <MenuNav />
       </header>
-      <main className="mb-5 overflow-scroll">
+      <main className="mb-5 overflow-y-scroll">
         <Outlet />
       </main>
       <footer className="mt-auto">

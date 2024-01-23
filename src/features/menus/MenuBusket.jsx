@@ -13,7 +13,7 @@ function MenuBasket() {
 
   return (
     <div
-      className={`text-md relative flex  items-center gap-5 bg-yellow-200/25 px-6 py-4 transition-all duration-500 ${
+      className={`text-md relative flex items-center justify-center gap-5 bg-yellow-200/25 px-6 py-4  transition-all duration-500 ${
         hasItemsInBasket
           ? 'bottom-0 h-auto opacity-100'
           : 'bottom-[-100px] h-0 opacity-0'

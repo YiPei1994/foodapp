@@ -11,7 +11,7 @@ export function useLogOut() {
     onSuccess: () => {
       queryClient.removeQueries();
       toast.success('User was successfully logged out.');
-      navigate('/menus', { replace: true });
+      navigate('/login', { replace: true });
     },
   });
   return { logOut, isLoading };

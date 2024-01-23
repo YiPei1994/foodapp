@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useMenus } from '../../contexts/useMenus';
 import { CiCirclePlus } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
 import MenuDetails from './MenuDetails';
+import { FaBookOpen } from 'react-icons/fa';
 
 function Menu({ menu }) {
   const { item_id, item_name, price, item_type } = menu;
@@ -20,11 +21,14 @@ function Menu({ menu }) {
 
   return (
     <div className="flex w-full flex-col ">
-      <div
-        onClick={() => setDisplayDetail((d) => !d)}
-        className="mb-2 flex  w-full cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-xl text-neutral-800"
-      >
-        <span className="w-[45%] ">{item_name}</span>{' '}
+      <div className="text-md mb-2  flex w-full cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-neutral-800">
+        <span
+          className="flex w-[45%] items-center gap-2 "
+          onClick={() => setDisplayDetail((d) => !d)}
+        >
+          {item_type !== 'drink' && <FaBookOpen />}
+          <span className="truncate"> {item_name}</span>
+        </span>{' '}
         <span className="w-[20%]">{price} €</span>
         {existedItemIndex !== -1 && existedItemQuantity > 0 ? (
           <Box className="flex w-[35%] items-center justify-between gap-4 rounded-xl bg-lime-400/50 px-2 py-2 text-2xl text-yellow-50 ">

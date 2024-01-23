@@ -22,42 +22,44 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <MenusContextProvider>
-          <OrderContextProvider>
-            <ChakraProvider>
-              <Routes>
-                <Route element={<Applayouts />}>
-                  <Route index element={<Navigate replace to="menus" />} />
-                  <Route path="menus" element={<Menus />} />
-                  <Route path="orders" element={<Orders />} />
-                  <Route path="orders/:orderId" element={<OrderWaitRoom />} />
-                  <Route path="*" element={<PageNotFound />} />
-                </Route>
-                <Route path="login" element={<Login />} />
-              </Routes>
-              <Toaster
-                position="top-center"
-                gutter={12}
-                containerStyle={{ margin: '8px' }}
-                toastOptions={{
-                  sucess: { duration: 3000 },
-                  error: { duration: 5000 },
-                  style: {
-                    fontSize: '16px',
-                    maxWidth: '500px',
-                    padding: '16px 24px',
-                    backgroundColor: '#fff',
-                    color: '#000',
-                  },
-                }}
-              />
-            </ChakraProvider>
-          </OrderContextProvider>
-        </MenusContextProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <div className="custom_bg my_font flex h-screen w-full items-center justify-center text-neutral-800">
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <MenusContextProvider>
+            <OrderContextProvider>
+              <ChakraProvider>
+                <Routes>
+                  <Route element={<Applayouts />}>
+                    <Route index element={<Navigate replace to="menus" />} />
+                    <Route path="menus" element={<Menus />} />
+                    <Route path="orders" element={<Orders />} />
+                    <Route path="orders/:orderId" element={<OrderWaitRoom />} />
+                    <Route path="*" element={<PageNotFound />} />
+                  </Route>
+                  <Route path="login" element={<Login />} />
+                </Routes>
+                <Toaster
+                  position="top-center"
+                  gutter={12}
+                  containerStyle={{ margin: '8px' }}
+                  toastOptions={{
+                    sucess: { duration: 3000 },
+                    error: { duration: 5000 },
+                    style: {
+                      fontSize: '16px',
+                      maxWidth: '500px',
+                      padding: '16px 24px',
+                      backgroundColor: '#fff',
+                      color: '#000',
+                    },
+                  }}
+                />
+              </ChakraProvider>
+            </OrderContextProvider>
+          </MenusContextProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </div>
   );
 }
 

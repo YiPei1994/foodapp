@@ -10,7 +10,7 @@ function OrderTable() {
 
   return (
     <>
-      <div className="my-5 flex w-full flex-wrap gap-5">
+      <div className="mx-auto my-5 flex w-4/5 flex-wrap justify-between gap-5 lg:justify-start">
         {orders.map((order) => (
           <CustomerTable key={order.order_id} order={order} />
         ))}
