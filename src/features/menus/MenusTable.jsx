@@ -4,12 +4,10 @@ import { useReadMenus } from './useReadMenus';
 import { useSearchParams } from 'react-router-dom';
 import Menu from './Menu';
 import {
-  Button,
   Container,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
@@ -59,26 +57,19 @@ function MenusTable() {
         <>
           {' '}
           <button
-            className="fixed bottom-10 right-10 rounded-full bg-yellow-50 p-4"
+            className="fixed bottom-10 right-10 rounded-full bg-yellow-50 p-2"
             onClick={onOpen}
           >
-            <CiCirclePlus className="text-2xl " />
+            <CiCirclePlus className="text-4xl" />
           </button>
-          <Modal isOpen={isOpen} onClose={onClose}>
+          <Modal isOpen={isOpen} onClose={onClose} size="xl">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Modal Title</ModalHeader>
+              <ModalHeader>Create a new Menu</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <CreateMenuForm />
+                <CreateMenuForm onClose={onClose} />
               </ModalBody>
-
-              <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={onClose}>
-                  Close
-                </Button>
-                <Button variant="ghost">Secondary Action</Button>
-              </ModalFooter>
             </ModalContent>
           </Modal>
         </>
