@@ -21,13 +21,15 @@ function Menu({ menu }) {
 
   return (
     <div className="flex w-full flex-col ">
-      <div className="text-md mb-2  flex w-full cursor-pointer items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3 py-3 text-neutral-800">
+      <div
+        className={`text-md mb-2  flex w-full cursor-pointer  items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3  text-neutral-800`}
+      >
         <span
           className="flex w-[45%] items-center gap-2 "
           onClick={() => setDisplayDetail((d) => !d)}
         >
           {item_type !== 'drink' && <FaBookOpen />}
-          <span className="truncate"> {item_name}</span>
+          <span className="my-2 block truncate py-4"> {item_name}</span>
         </span>{' '}
         <span className="w-[20%]">{price} €</span>
         {existedItemIndex !== -1 && existedItemQuantity > 0 ? (
@@ -49,13 +51,12 @@ function Menu({ menu }) {
           </button>
         )}
       </div>
-
-      {item_type !== 'drink' && (
+      <>
         <div>
           {' '}
           <MenuDetails menu={menu} display={displayDetail} />
         </div>
-      )}
+      </>
     </div>
   );
 }

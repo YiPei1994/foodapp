@@ -1,8 +1,20 @@
-import { Card, CardBody, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Heading,
+  Image,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import React from 'react';
+import { useCurrentUser } from '../Auth/useCurrentUser';
+import MenuEdit from './MenuEdit';
+import MenuDelete from './MenuDelete';
 
 function MenuDetails({ menu, display }) {
-  const { item_name, price, description, image, allergies } = menu;
+  const { item_name, price, description, image, allergies, item_id } = menu;
+  const { isAutenticated } = useCurrentUser();
   return (
     <div
       className={` overflow-hidden transition-all duration-500 ease-in-out ${
@@ -23,6 +35,12 @@ function MenuDetails({ menu, display }) {
             <Text>{allergies} </Text>
           </Stack>
         </CardBody>
+        {isAutenticated && (
+          <div className="mb-4 flex justify-end gap-4">
+            <MenuEdit menu={menu} />
+            <MenuDelete id={item_id} />
+          </div>
+        )}
       </Card>
     </div>
   );

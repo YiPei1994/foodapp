@@ -12,7 +12,8 @@ export const getMenus = async () => {
 };
 
 // creating new menu
-export async function createMenu(newMenu) {
+export async function createMenu(newMenu, id) {
+  console.log(newMenu, id);
   const hasImagePath = newMenu.image?.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newMenu.image.name}`.replaceAll(
@@ -24,9 +25,11 @@ export async function createMenu(newMenu) {
     : `${supabaseUrl}/storage/v1/object/public/menuImages/${imageName}`;
 
   let query = supabase.from('menu_items');
-
   // A) CREATE
-  query = query.insert([{ ...newMenu, image: imagePath }]);
+  if (!id) query = query.insert([{ ...newMenu, image: imagePath }]);
+
+  // B) EDIT
+  if (id) query = query.update({ ...newMenu, image: imagePath }).eq('id', id);
 
   const { data, error } = await query.select().single();
 
@@ -53,3 +56,17 @@ export async function createMenu(newMenu) {
 
   return data;
 }
+
+// delete row
+export const deleteMenu = async (id) => {
+  const { data, error } = await supabase
+    .from('menu_items')
+    .delete()
+    .eq('item_id', id)
+    .single();
+
+  if (error) {
+    throw new Error('Couldnt delete menu.');
+  }
+  return data;
+};
