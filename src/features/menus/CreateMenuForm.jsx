@@ -5,29 +5,23 @@ import { useCreateMenu } from './useCreateMenu';
 import { useEditMenus } from './useEditMenu';
 
 export default function CreateMenuForm({ onClose, menu = {} }) {
-  const {
-    item_name,
-    item_type,
-    item_id: editId,
-    price,
-    description,
-    allergies,
-  } = menu;
-  const { register, handleSubmit, reset, formState } = useForm();
-  const { errors } = formState;
+  const { item_id: editId, ...editValues } = menu;
+  const isEditSession = Boolean(editId);
   const { creatingMenu } = useCreateMenu();
   const { editMenus } = useEditMenus();
-  const isEditSession = Boolean(editId);
+  const { register, handleSubmit, reset, formState } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
+  const { errors } = formState;
   function onSubmit(data) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
     if (isEditSession) {
-      console.log(data, editId);
-
       editMenus(
-        { ...data, image, id: editId },
+        { newMenusData: { ...data, image }, id: editId },
         {
           onSuccess: (data) => {
             reset();
+            onClose();
           },
         },
       );
@@ -37,6 +31,7 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         {
           onSuccess: (data) => {
             reset();
+            onClose();
           },
         },
       );
@@ -50,8 +45,8 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         <input
           id="item_name"
           type="text"
-          defaultValue={item_name}
           className="w-3/5 border border-yellow-300 px-4 py-2 focus:border-amber-500 focus:outline-none"
+          defaultValue=""
           {...register('item_name', { required: 'required' })}
         />
       </div>
@@ -62,8 +57,8 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         <input
           id="item_type"
           type="text"
-          defaultValue={item_type}
           className="w-3/5 border border-yellow-300 px-4 py-2 focus:border-amber-500 focus:outline-none"
+          defaultValue=""
           {...register('item_type', { required: 'required' })}
         />
       </div>
@@ -74,8 +69,8 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         <input
           id="price"
           type="number"
-          defaultValue={price}
           className="w-3/5 border border-yellow-300 px-4 py-2 focus:border-amber-500 focus:outline-none"
+          defaultValue={0}
           {...register('price', { required: 'required' })}
         />
       </div>
@@ -86,8 +81,8 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         <input
           id="allergies"
           type="text"
-          defaultValue={allergies}
           className="w-3/5 border border-yellow-300 px-4 py-2 focus:border-amber-500 focus:outline-none"
+          defaultValue=""
           {...register('allergies', { required: 'required' })}
         />
       </div>
@@ -98,8 +93,8 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         <textarea
           id="description"
           type="text"
-          defaultValue={description}
           className="w-3/5 border border-yellow-300 px-4 py-2 focus:border-amber-500 focus:outline-none"
+          defaultValue=""
           {...register('description', { required: 'required' })}
         />
       </div>
@@ -110,10 +105,12 @@ export default function CreateMenuForm({ onClose, menu = {} }) {
         </label>
         <input
           id="image"
-          type="file"
           accept="image/*"
-          className="w-3/5  px-4 py-2 "
-          {...register('image')}
+          type="file"
+          className="w-3/5 px-4 py-2 "
+          {...register('image', {
+            required: isEditSession ? false : 'This is required',
+          })}
         />
       </div>
 

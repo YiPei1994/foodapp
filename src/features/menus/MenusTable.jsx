@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import MenusOperation from './MenusOperation';
 import { useReadMenus } from './useReadMenus';
 import { useSearchParams } from 'react-router-dom';
-import Menu from './Menu';
+import Menu from './SingleMenu';
 import {
   Container,
   ModalBody,

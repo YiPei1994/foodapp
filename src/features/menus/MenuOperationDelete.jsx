@@ -19,7 +19,6 @@ function MenuDelete({ id }) {
   const { isOpen, onToggle, onClose } = useDisclosure();
   const { deletingMenu } = useDeleteMenu();
   function handleConfirm() {
-    console.log(id);
     if (!id) return;
     deletingMenu(id);
     onClose();

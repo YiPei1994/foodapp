@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 import { useMenus } from '../../contexts/useMenus';
 import { CiCirclePlus } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
-import MenuDetails from './MenuDetails';
+import MenuDetails from './SingleMenuDetails';
 import { FaBookOpen } from 'react-icons/fa';
 
 function Menu({ menu }) {

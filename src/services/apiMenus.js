@@ -10,10 +10,9 @@ export const getMenus = async () => {
 
   return data;
 };
+// create / edit menus
 
-// creating new menu
-export async function createMenu(newMenu, id) {
-  console.log(newMenu, id);
+export async function createEditMenu(newMenu, id) {
   const hasImagePath = newMenu.image?.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newMenu.image.name}`.replaceAll(
@@ -24,12 +23,15 @@ export async function createMenu(newMenu, id) {
     ? newMenu.image
     : `${supabaseUrl}/storage/v1/object/public/menuImages/${imageName}`;
 
+  // 1. Create/edit menu
   let query = supabase.from('menu_items');
+
   // A) CREATE
   if (!id) query = query.insert([{ ...newMenu, image: imagePath }]);
 
   // B) EDIT
-  if (id) query = query.update({ ...newMenu, image: imagePath }).eq('id', id);
+  if (id)
+    query = query.update({ ...newMenu, image: imagePath }).eq('item_id', id);
 
   const { data, error } = await query.select().single();
 
@@ -45,18 +47,17 @@ export async function createMenu(newMenu, id) {
     .from('menuImages')
     .upload(imageName, newMenu.image);
 
-  // 3. Delete the cabin IF there was an error uplaoding image
+  // 3. Delete the Menu IF there was an error uplaoding image
   if (storageError) {
     await supabase.from('menu_items').delete().eq('id', data.id);
     console.error(storageError);
     throw new Error(
-      'Cabin image could not be uploaded and the cabin was not created',
+      'Menu image could not be uploaded and the Menu was not created',
     );
   }
 
   return data;
 }
-
 // delete row
 export const deleteMenu = async (id) => {
   const { data, error } = await supabase

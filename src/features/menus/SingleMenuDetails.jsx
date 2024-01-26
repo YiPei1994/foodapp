@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useCurrentUser } from '../Auth/useCurrentUser';
-import MenuEdit from './MenuEdit';
-import MenuDelete from './MenuDelete';
+import MenuEdit from './MenuOperationEdit';
+import MenuDelete from './MenuOperationDelete';
 
 function MenuDetails({ menu, display }) {
   const { item_name, price, description, image, allergies, item_id } = menu;
@@ -18,7 +18,7 @@ function MenuDetails({ menu, display }) {
   return (
     <div
       className={` overflow-hidden transition-all duration-500 ease-in-out ${
-        display ? 'max-h-[440px] lg:max-h-[550px]' : 'invisible max-h-0'
+        display ? 'max-h-[440px] lg:max-h-[850px]' : 'invisible max-h-0'
       } `}
     >
       <Card maxW="xl">
