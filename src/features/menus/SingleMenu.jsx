@@ -18,16 +18,26 @@ function Menu({ menu }) {
   const existedItemQuantity = menuItems.find(
     (item) => item.item_id === item_id,
   )?.quantity;
+  function handleDisplay(e) {
+    console.log(e.target);
+    if (
+      e.target instanceof SVGPathElement ||
+      e.target instanceof HTMLButtonElement ||
+      e.target instanceof SVGElement
+    ) {
+      return;
+    }
+
+    setDisplayDetail((d) => !d);
+  }
 
   return (
     <div className="flex w-full flex-col ">
       <div
+        onClick={(e) => handleDisplay(e)}
         className={`text-md mb-2  flex w-full cursor-pointer  items-center justify-between gap-1 rounded-md bg-amber-300/50 px-3  text-neutral-800`}
       >
-        <span
-          className="flex w-[45%] items-center gap-2 "
-          onClick={() => setDisplayDetail((d) => !d)}
-        >
+        <span className="flex w-[45%] items-center gap-2 ">
           {item_type !== 'drink' && <FaBookOpen />}
           <span className="my-2 block truncate py-4"> {item_name}</span>
         </span>{' '}
