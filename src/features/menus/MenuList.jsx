@@ -48,7 +48,7 @@ function MenuList() {
   return (
     <>
       <div
-        className="rounded-lg bg-lime-400/50 px-6 py-3"
+        className="cursor-pointer rounded-lg bg-lime-400/50 px-6 py-3"
         onClick={handleCreatingTable}
       >
         <AiOutlineShoppingCart className="text-4xl" />

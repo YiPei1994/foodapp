@@ -66,7 +66,7 @@ function MenusTable() {
         <>
           {' '}
           <button
-            className="fixed bottom-10 right-10 rounded-full bg-yellow-50 p-2"
+            className="fixed bottom-5 left-10 z-50  rounded-full bg-yellow-50 p-2 lg:left-12  "
             onClick={onOpen}
           >
             <CiCirclePlus className="text-4xl" />

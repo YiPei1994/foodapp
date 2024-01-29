@@ -25,7 +25,7 @@ function MenuNav() {
             ? 'rounded-lg bg-yellow-400/75	px-2 py-2 text-lg uppercase tracking-wide text-yellow-50'
             : 'px-2 py-2	text-lg uppercase tracking-wide '
         }
-        to={`orders/${newOrderId}`}
+        to={newOrderId ? `orders/${newOrderId}` : `/`}
       >
         My order
       </NavLink>

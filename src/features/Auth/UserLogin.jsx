@@ -5,7 +5,7 @@ import Logo from '../../components/Logo';
 function UserLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLogging } = useLogIn();
+  const { login } = useLogIn();
 
   function handleSubmit(e) {
     e.preventDefault();
