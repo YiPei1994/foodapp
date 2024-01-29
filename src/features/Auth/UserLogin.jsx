@@ -3,8 +3,8 @@ import { useLogIn } from './useLogIn';
 import Logo from '../../components/Logo';
 
 function UserLogin() {
-  const [email, setEmail] = useState('studentypz@gmail.com');
-  const [password, setPassword] = useState('yp651588');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, isLogging } = useLogIn();
 
   function handleSubmit(e) {

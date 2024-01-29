@@ -13,7 +13,16 @@ function OrderWaitRoom() {
     queryFn: () => getMyOrderStatus(orderId),
   });
   const totalPrice = items.reduce((acc, cur) => acc + cur.price, 0);
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="md"
+      />
+    );
 
   const orderStatus = status[0]?.status;
   return (

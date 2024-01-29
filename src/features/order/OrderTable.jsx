@@ -6,7 +6,16 @@ import CustomerTable from './CustomerTableOverview';
 function OrderTable() {
   const { orders, isLoading } = useOrders();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="md"
+      />
+    );
 
   return (
     <>
