@@ -17,7 +17,13 @@ import { useMenus } from '../../contexts/useMenus';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLastOrderId } from '../../services/apiOrder';
 
-function ConfirmOrder({ type, error, isError, CloserDrawer }) {
+function ConfirmOrder({
+  type,
+  error,
+  isError,
+  CloserDrawer,
+  isLoadingOrderId,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { menuItems, setMenuItems, customer, table } = useMenus();
   const { setNewOrderItems, newOrderItems } = useContextOrders();
@@ -71,7 +77,13 @@ function ConfirmOrder({ type, error, isError, CloserDrawer }) {
 
   return (
     <>
-      <Button onClick={handleCreatingTable}>Confirm {type}</Button>
+      <Button
+        disabled={isLoadingOrderId}
+        colorScheme="yellow"
+        onClick={handleCreatingTable}
+      >
+        Confirm {type}
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

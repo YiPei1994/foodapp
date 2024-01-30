@@ -8,6 +8,7 @@ import {
   DrawerBody,
   DrawerFooter,
   Drawer,
+  Spinner,
 } from '@chakra-ui/react';
 
 import ConfirmOrder from '../order/ConfirmOrder';
@@ -25,7 +26,11 @@ function MenuList() {
   const { deletingOrder } = useDeleteOrder();
 
   // Fetch the last order ID for the specified table
-  const { data: orderId, refetch } = useQuery({
+  const {
+    data: orderId,
+    refetch,
+    isLoading: isLoadingOrderId,
+  } = useQuery({
     queryKey: ['orders', table],
     queryFn: () => fetchLastOrderId(table),
   });
@@ -63,7 +68,8 @@ function MenuList() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
-            Your table is {table} and order number is: {orderId}
+            Your table is {table} and order number is:{' '}
+            {isLoadingOrderId ? <Spinner /> : orderId}
           </DrawerHeader>
           <DrawerBody>
             {menuItems.map((menu) => (
@@ -90,6 +96,7 @@ function MenuList() {
               error={error}
               isError={isError}
               CloserDrawer={CloserDrawer}
+              isLoadingOrderId={isLoadingOrderId}
             />
           </DrawerFooter>
         </DrawerContent>

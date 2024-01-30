@@ -1,16 +1,25 @@
 import { useState } from 'react';
 import { useLogIn } from './useLogIn';
 import Logo from '../../components/Logo';
+import { useNavigate } from 'react-router-dom';
 
 function UserLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useLogIn();
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSuccess: () => {
+          navigate('/');
+        },
+      },
+    );
     setEmail('');
     setPassword('');
   }
@@ -20,7 +29,7 @@ function UserLogin() {
       className="mx-auto flex  w-full  flex-col rounded-lg bg-yellow-50/25 px-4 py-4 lg:w-1/4"
     >
       <Logo />
-      <div className="  m-auto flex w-4/5 flex-col items-start justify-between gap-4 py-4 lg:flex-row">
+      <div className="  m-auto flex w-4/5 flex-col items-start justify-between gap-4 py-4 lg:flex-row lg:items-center">
         <label htmlFor="email">Email:</label>
         <input
           className="w-full rounded-lg p-2 px-5"
