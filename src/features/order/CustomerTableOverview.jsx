@@ -49,7 +49,7 @@ function CustomerTable({ order }) {
         onClick={handleClick}
         className={`${
           status === 'In Progress' ? 'bg-yellow-400' : 'bg-lime-500'
-        } flex cursor-pointer flex-col items-center justify-center gap-2  rounded-lg  p-4 text-2xl text-yellow-50 lg:min-w-[200px] `}
+        } p flex w-[48%] cursor-pointer flex-col items-center justify-center  gap-2  rounded-lg p-2 text-2xl text-yellow-50 lg:min-w-[200px] `}
       >
         <MdTableBar className="text-6xl" />
 

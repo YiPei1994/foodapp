@@ -10,7 +10,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   useDisclosure,
   Modal,
 } from '@chakra-ui/react';
@@ -18,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 import CreateMenuForm from './CreateMenuForm';
 import { useCurrentUser } from '../Auth/useCurrentUser';
 import { CiCirclePlus } from 'react-icons/ci';
+import Spinner from '../../components/Spinner';
 
 function MenusTable() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,16 +28,7 @@ function MenusTable() {
     setSearchParams(new URLSearchParams({ table: 3, customer_id: uuidv4() }));
   }, []);
 
-  if (isLoading)
-    return (
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="md"
-      />
-    );
+  if (isLoading) return <Spinner />;
 
   const filterValue = searchParams.get('types') || 'drink';
 

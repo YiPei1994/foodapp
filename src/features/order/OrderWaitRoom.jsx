@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyOrderStatus } from '../../services/apiOrder';
 
-import { Container, Spinner } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import SingleOrder from './SingleOrder';
+import Spinner from '../../components/Spinner';
 
 function OrderWaitRoom() {
   const customerOrders = JSON.parse(localStorage?.getItem('customerOrder'));
@@ -13,16 +14,7 @@ function OrderWaitRoom() {
     queryFn: () => getMyOrderStatus(orderId),
   });
   const totalPrice = items.reduce((acc, cur) => acc + cur.price, 0);
-  if (isLoading)
-    return (
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="md"
-      />
-    );
+  if (isLoading) return <Spinner />;
 
   const orderStatus = status[0]?.status;
   return (
