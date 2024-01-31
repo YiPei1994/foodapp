@@ -93,12 +93,14 @@ function CustomerTable({ order }) {
             <Button variant="outline" mr={4} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="green" onClick={handlePrint}>
-              Print
-            </Button>
+
             <ReactToPrint
               trigger={() => {
-                return <button>print2</button>;
+                return (
+                  <Button colorScheme="green" onClick={handlePrint}>
+                    Print
+                  </Button>
+                );
               }}
               content={() => printRef.current}
             />
