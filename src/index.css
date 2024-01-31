@@ -24,3 +24,36 @@
 .my_font {
   font-family: 'Noto Serif', serif;
 }
+
+/* print css */
+
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
+@media print {
+  html,
+  body {
+    height: initial !important;
+    overflow: initial !important;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: auto;
+  }
+  .printable-element {
+    height: auto;
+  }
+}
+
+@page {
+  size: 105mm auto;
+  margin: 10mm;
+}

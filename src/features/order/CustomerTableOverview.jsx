@@ -10,12 +10,14 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getItemsFromOrderId } from '../../services/apiOrder';
 import { useUpdateOrderStatus } from './useUpdateOrderStatus';
 import { MdTableBar } from 'react-icons/md';
 import { useDeleteOrder } from './useDeleteOrder';
+import { FaWindows } from 'react-icons/fa';
+import ReactToPrint from 'react-to-print';
 
 function CustomerTable({ order }) {
   const { status, table_id, order_id } = order;
@@ -23,6 +25,7 @@ function CustomerTable({ order }) {
   const { deletingOrder } = useDeleteOrder();
   const statusCooking = 'Cooking';
   const { updatingStatus } = useUpdateOrderStatus();
+  const printRef = useRef();
   const { data: ordered_items, refetch } = useQuery({
     queryKey: ['order_items', order_id],
     queryFn: () => getItemsFromOrderId(order_id),
@@ -37,6 +40,7 @@ function CustomerTable({ order }) {
     if (!order_id) return;
     updatingStatus({ order_id, statusCooking });
     onClose();
+    window.print();
   }
 
   function handleDeleteFinishedOrder() {
@@ -64,16 +68,18 @@ function CustomerTable({ order }) {
           <ModalHeader> Menu of table {table_id} </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {ordered_items?.map((item, i) => (
-              <div className="my-2 flex w-full items-center  gap-10" key={i}>
-                <span className="text-bold w-1/5"> {item.quantity} x</span>
-                <span className="mr-auto w-1/5">
-                  {' '}
-                  {item.menu_items.item_type}
-                </span>
-                <span> {item.menu_items.item_name}</span>
-              </div>
-            ))}
+            <div ref={printRef}>
+              {ordered_items?.map((item, i) => (
+                <div className="my-2 flex w-full items-center  gap-10" key={i}>
+                  <span className="text-bold w-1/5"> {item.quantity} x</span>
+                  <span className="mr-auto w-1/5">
+                    {' '}
+                    {item.menu_items.item_type}
+                  </span>
+                  <span> {item.menu_items.item_name}</span>
+                </div>
+              ))}
+            </div>
           </ModalBody>
 
           <ModalFooter>
@@ -90,6 +96,12 @@ function CustomerTable({ order }) {
             <Button colorScheme="green" onClick={handlePrint}>
               Print
             </Button>
+            <ReactToPrint
+              trigger={() => {
+                return <button>print2</button>;
+              }}
+              content={() => printRef.current}
+            />
           </ModalFooter>
         </ModalContent>
       </Modal>
